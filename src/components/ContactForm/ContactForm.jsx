@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { addNewContact } from '../../redux/contactSlice';
+import { addNewContact } from '../../redux/operations'; //new
+// import { addNewContact1 } from '../../redux/contactSlice'; //old
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -18,7 +19,6 @@ const Form = () => {
   const handleInputChange = event => {
     const value = event.target.value;
     const name = event.target.name;
-
     switch (name) {
       case 'name':
         setName(value);
@@ -29,6 +29,10 @@ const Form = () => {
       default:
         break;
     }
+
+    // const textValue = event.target;
+    // console.log(textValue);
+    // return textValue;
   };
 
   const handleFormReset = () => {
@@ -40,6 +44,7 @@ const Form = () => {
     event.preventDefault();
     setName(name);
     setNumber(number);
+
     createContact({ name, number });
 
     handleFormReset();
@@ -62,6 +67,7 @@ const Form = () => {
         theme: 'colored',
       });
     } else {
+      console.log(data);
       dispatch(addNewContact(data));
 
       toast.success('Contact added!', {

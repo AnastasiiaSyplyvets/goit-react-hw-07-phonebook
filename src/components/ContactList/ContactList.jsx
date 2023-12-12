@@ -1,19 +1,31 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteContact } from '../../redux/contactSlice';
 
 import css from './ContactList.module.css';
+
+//NEW imports
+import { useEffect } from 'react';
+import { fetchContacts } from '../../redux/operations';
+import * as contactOperations from '../../redux/operations';
+
+// Old code
 
 export const Contact = () => {
   const filterRedux = useSelector(state => state.filter);
   const contactsRedux = useSelector(state => state.contacts);
-
   const dispatch = useDispatch();
+  //new code
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
+  //end
 
   const filterContacts = () => {
     const normalizedFilter = filterRedux.filter.toLowerCase().trim();
 
-    return contactsRedux.contacts.filter(contact =>
+    return contactsRedux.contacts.items.filter(contact =>
       contact.name.toLowerCase().includes(normalizedFilter)
     );
   };
@@ -21,7 +33,7 @@ export const Contact = () => {
   const visibleContacts = filterContacts();
 
   const handleDeleteBtn = id => {
-    dispatch(deleteContact(id));
+    dispatch(contactOperations.deleteContact(id));
   };
 
   return (
