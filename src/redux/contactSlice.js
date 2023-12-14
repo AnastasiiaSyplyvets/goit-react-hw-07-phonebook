@@ -21,25 +21,25 @@ export const contactSlice = createSlice({
       .addCase(fetchContacts.pending, state => {
         return (state.contacts.isLoading = true);
       })
-      .addCase(fetchContacts.sucess, (state, action) => {
+      .addCase(fetchContacts.fulfilled, (state, action) => {
         state.contacts.isLoading = false;
         state.contacts.error = null;
         return (state.contacts.items = action.payload);
       })
-      .addCase(fetchContacts.error, (state, action) => {
+      .addCase(fetchContacts.rejected, (state, action) => {
         state.contacts.isLoading = false;
         return (state.contacts.error = action.payload);
       })
       .addCase(addNewContact.pending, (state, action) => {
         return (state.contacts.isLoading = true);
       })
-      .addCase(addNewContact.sucess, (state, action) => {
+      .addCase(addNewContact.fulfilled, (state, action) => {
         console.log(action.payload);
         state.contacts.isLoading = false;
         state.contacts.error = null;
-        return state.contacts.items.push(action.payload); // state.contacts.items?
+        state.contacts.items.push(action.payload); // state.contacts.items?
       })
-      .addCase(addNewContact.error, (state, action) => {
+      .addCase(addNewContact.rejected, (state, action) => {
         state.contacts.isLoading = false;
         return (state.contacts.error = action.payload);
       })
