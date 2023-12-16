@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { addNewContact } from '../../redux/operations'; //new
-// import { addNewContact1 } from '../../redux/contactSlice'; //old
+
+import { selectContacts } from '../../redux/selectors';
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,7 +14,7 @@ const Form = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-  const contactsRedux = useSelector(state => state.contacts);
+  const contactsRedux = useSelector(selectContacts);
   const dispatch = useDispatch();
 
   const handleInputChange = event => {
@@ -29,10 +30,6 @@ const Form = () => {
       default:
         break;
     }
-
-    // const textValue = event.target;
-    // console.log(textValue);
-    // return textValue;
   };
 
   const handleFormReset = () => {
@@ -41,30 +38,18 @@ const Form = () => {
   };
 
   const handleFormSubmit = event => {
-    // event.preventDefault();
-    // const inputName = event.target.elements.name.value;
-    // const inputNumber = event.target.elements.number.value;
-    // const form = event.target;
-
-    // console.log(inputName);
-    // console.log(inputNumber);
-    // dispatch(addTask(event.target.elements.text.value));
-    // form.reset();
-
     event.preventDefault();
     setName(name);
     setNumber(number);
 
-    console.log({ name, number });
     createContact({ name, number });
 
     handleFormReset();
   };
 
   const createContact = data => {
-    console.log(contactsRedux.contacts.items);
     if (
-      contactsRedux.contacts.items.find(
+      contactsRedux.find(
         contact => contact.name === data.name && contact.number === data.number
       )
     ) {
@@ -79,7 +64,6 @@ const Form = () => {
         theme: 'colored',
       });
     } else {
-      console.log(data);
       dispatch(addNewContact(data));
 
       toast.success('Contact added!', {

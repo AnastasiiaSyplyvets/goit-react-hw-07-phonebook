@@ -1,49 +1,25 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-  selectContacts,
-  // selectFilter,
-  selectVisibleContacts,
-} from '../../redux/selectors';
-
-import css from './ContactList.module.css';
-
-//NEW imports
 import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectContacts, selectVisibleContacts } from '../../redux/selectors';
+
 import { fetchContacts } from '../../redux/operations';
 import * as contactOperations from '../../redux/operations';
 
-// Old code
+import css from './ContactList.module.css';
 
 export const Contact = () => {
-  // const filterRedux = useSelector(selectFilter);
   const contactsRedux = useSelector(selectContacts);
-  const dispatch = useDispatch();
   const contacts = useSelector(selectVisibleContacts);
-
-  console.log(contactsRedux);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchContacts());
-    console.log('object');
   }, [dispatch]);
 
   if (!contactsRedux) {
     return;
   }
-
-  console.log('hello');
-  console.log(contactsRedux);
-
-  // const filterContacts = () => {
-  //   const normalizedFilter = filterRedux.filter.toLowerCase().trim();
-
-  //   return contactsRedux.filter(contact =>
-  //     contact.name.toLowerCase().includes(normalizedFilter)
-  //   );
-  // };
-
-  // const visibleContacts = filterContacts();
 
   const handleDeleteBtn = id => {
     dispatch(contactOperations.deleteContact(id));
