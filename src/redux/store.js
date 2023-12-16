@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers } from '@reduxjs/toolkit';
 
 import {
   FLUSH,
@@ -10,15 +11,15 @@ import {
 } from 'redux-persist';
 
 import { contactsReducer } from './contactSlice';
-// import { filterReducer } from './filterSlice';
+import { filterReducer } from './filterSlice';
 
-// const rootReducer = combineReducers({
-//   contacts: contactsReducer,
-//   // filter: filterReducer,
-// });
+const rootReducer = combineReducers({
+  contacts: contactsReducer,
+  filter: filterReducer,
+});
 
 export const store = configureStore({
-  reducer: contactsReducer,
+  reducer: rootReducer,
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {

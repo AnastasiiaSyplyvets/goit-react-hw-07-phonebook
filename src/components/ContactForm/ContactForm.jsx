@@ -41,18 +41,30 @@ const Form = () => {
   };
 
   const handleFormSubmit = event => {
+    // event.preventDefault();
+    // const inputName = event.target.elements.name.value;
+    // const inputNumber = event.target.elements.number.value;
+    // const form = event.target;
+
+    // console.log(inputName);
+    // console.log(inputNumber);
+    // dispatch(addTask(event.target.elements.text.value));
+    // form.reset();
+
     event.preventDefault();
     setName(name);
     setNumber(number);
 
+    console.log({ name, number });
     createContact({ name, number });
 
     handleFormReset();
   };
 
   const createContact = data => {
+    console.log(contactsRedux.contacts.items);
     if (
-      contactsRedux.contacts.find(
+      contactsRedux.contacts.items.find(
         contact => contact.name === data.name && contact.number === data.number
       )
     ) {

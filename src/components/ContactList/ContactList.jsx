@@ -1,5 +1,10 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import {
+  selectContacts,
+  selectFilter,
+  selectVisibleContacts,
+} from '../../redux/selectors';
 
 import css from './ContactList.module.css';
 
@@ -12,20 +17,28 @@ import * as contactOperations from '../../redux/operations';
 
 export const Contact = () => {
   const filterRedux = useSelector(state => state.filter);
-  const contactsRedux = useSelector(state => state.contacts);
+  const contactsRedux = useSelector(state => state.contacts.items);
   const dispatch = useDispatch();
-  //new code
+  const contacts = useSelector(selectVisibleContacts);
+
+  console.log(contactsRedux);
 
   useEffect(() => {
     dispatch(fetchContacts());
+    console.log('object');
   }, [dispatch]);
 
-  //end
+  if (!contactsRedux) {
+    return;
+  }
+
+  console.log('hello');
+  console.log(contactsRedux);
 
   const filterContacts = () => {
     const normalizedFilter = filterRedux.filter.toLowerCase().trim();
 
-    return contactsRedux.contacts.items.filter(contact =>
+    return contactsRedux.filter(contact =>
       contact.name.toLowerCase().includes(normalizedFilter)
     );
   };

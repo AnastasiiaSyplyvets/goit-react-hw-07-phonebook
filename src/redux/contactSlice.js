@@ -19,19 +19,21 @@ export const contactSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(fetchContacts.pending, state => {
-        return (state.contacts.isLoading = true);
+        state.contacts.isLoading = true;
       })
       .addCase(fetchContacts.fulfilled, (state, action) => {
+        console.log(action.payload);
         state.contacts.isLoading = false;
         state.contacts.error = null;
-        return (state.contacts.items = action.payload);
+        state.contacts.items = action.payload;
+        console.log(state.contacts.items);
       })
       .addCase(fetchContacts.rejected, (state, action) => {
         state.contacts.isLoading = false;
-        return (state.contacts.error = action.payload);
+        state.contacts.error = action.payload;
       })
       .addCase(addNewContact.pending, (state, action) => {
-        return (state.contacts.isLoading = true);
+        state.contacts.isLoading = true;
       })
       .addCase(addNewContact.fulfilled, (state, action) => {
         console.log(action.payload);
@@ -41,10 +43,10 @@ export const contactSlice = createSlice({
       })
       .addCase(addNewContact.rejected, (state, action) => {
         state.contacts.isLoading = false;
-        return (state.contacts.error = action.payload);
+        state.contacts.error = action.payload;
       })
       .addCase(deleteContact.pending, (state, action) => {
-        return (state.contacts.isLoading = true);
+        state.contacts.isLoading = true;
       })
       .addCase(deleteContact.fulfilled, (state, action) => {
         state.contacts.isLoading = false;
@@ -52,11 +54,11 @@ export const contactSlice = createSlice({
         const index = state.contacts.items.findIndex(
           contact => contact.id === action.payload.id
         );
-        return state.contacts.items.splice(index, 1);
+        state.contacts.items.splice(index, 1);
       })
       .addCase(deleteContact.rejected, (state, action) => {
         state.contacts.isLoading = false;
-        return (state.contacts.error = action.payload);
+        state.contacts.error = action.payload;
       });
   },
 });
