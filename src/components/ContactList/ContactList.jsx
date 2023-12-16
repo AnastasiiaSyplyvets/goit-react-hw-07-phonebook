@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   selectContacts,
-  selectFilter,
+  // selectFilter,
   selectVisibleContacts,
 } from '../../redux/selectors';
 
@@ -16,8 +16,8 @@ import * as contactOperations from '../../redux/operations';
 // Old code
 
 export const Contact = () => {
-  const filterRedux = useSelector(state => state.filter);
-  const contactsRedux = useSelector(state => state.contacts.items);
+  // const filterRedux = useSelector(selectFilter);
+  const contactsRedux = useSelector(selectContacts);
   const dispatch = useDispatch();
   const contacts = useSelector(selectVisibleContacts);
 
@@ -35,15 +35,15 @@ export const Contact = () => {
   console.log('hello');
   console.log(contactsRedux);
 
-  const filterContacts = () => {
-    const normalizedFilter = filterRedux.filter.toLowerCase().trim();
+  // const filterContacts = () => {
+  //   const normalizedFilter = filterRedux.filter.toLowerCase().trim();
 
-    return contactsRedux.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
-    );
-  };
+  //   return contactsRedux.filter(contact =>
+  //     contact.name.toLowerCase().includes(normalizedFilter)
+  //   );
+  // };
 
-  const visibleContacts = filterContacts();
+  // const visibleContacts = filterContacts();
 
   const handleDeleteBtn = id => {
     dispatch(contactOperations.deleteContact(id));
@@ -51,7 +51,7 @@ export const Contact = () => {
 
   return (
     <ul className={css.listCover}>
-      {visibleContacts.map(contact => {
+      {contacts.map(contact => {
         return (
           <li className={css.contactList} key={contact.id}>
             <p className={css.contactText}>
