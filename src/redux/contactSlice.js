@@ -13,7 +13,7 @@ export const contactSlice = createSlice({
       isLoading: false,
       error: null,
     },
-    filter: '',
+    // filter: '',
   },
 
   extraReducers: builder => {
